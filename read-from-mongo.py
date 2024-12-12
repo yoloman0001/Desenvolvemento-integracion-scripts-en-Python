@@ -1,9 +1,12 @@
 from pymongo import MongoClient
+import pandas as pd
 
+# Conection to the database
 client = MongoClient('localhost:27017')
 db_name = client['citybik']
 collection_name = db_name['bikestations']
 
+# Aggregation pipeline
 pipeline = [
     {
         '$match': {}
@@ -16,11 +19,20 @@ pipeline = [
             'timestamp': 1,
             'free_bikes': 1,
             'empty_slots': 1,
-            # FALTA Subconsulta para uid, last_updated, slots, normal_bikes, ebikes
+            'extra.uid': 1,
+            'extra.last_updated': 1,
+            'extra.slots': 1,
+            'extra.normal_bikes': 1,
+            'extra.ebikes': 1,
         }
     }
 ]
 
-result = collection_name.aggregate(pipeline)
+result = list(collection_name.aggregate(pipeline)) # convert the cursor returned by 'aggregate' to make it compatible with pandas dataframes
+df = pd.DataFrame(result)
+# Export to csv and parquet
+df.to_csv('./data/bike_stations_in_Corunha.csv')
+df.to_parquet('./data/bike_stations_in_Corunha.parquet')
+
 for document in result:
     print(document)
