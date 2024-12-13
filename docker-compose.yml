@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mongobikes:
+    image: mongo:latest
+    container_name: mongobikes
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  app:
+    build: .
+    container_name: app
+    depends_on:
+      - mongobikes
+    environment:
+      MONGO_URI: mongodb://mongobikes:27017
+    networks:
+      - app-network
+    volumes:
+      - .:/app
+
+networks:
+  app-network:

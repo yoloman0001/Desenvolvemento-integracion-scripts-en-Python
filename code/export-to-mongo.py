@@ -10,7 +10,8 @@ logger = logging.getLogger(__name__)
 endpoint = 'https://api.citybik.es/v2/networks/bicicorunha'
 
 # Connection to the database
-client = MongoClient('mongodb://localhost:27017') # ARREGLAR RUTA CUANDO SE EJECUTA EL CONTENEDOR
+MONGO_URI = 'mongodb://mongobikes:27017'
+client = MongoClient(MONGO_URI) 
 db_name = client['citybik']
 collection_name = db_name['bikestations']
 

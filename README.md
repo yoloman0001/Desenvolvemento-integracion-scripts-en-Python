@@ -28,20 +28,22 @@ git clone git@github.com:yoloman0001/Desenvolvemento-integracion-scripts-en-Pyth
 
 ### :link: Instalar dependencias
 
-Crea un environment con conda (opcional)
+Crea un environment con conda (opcional).
 
 ~~~
 conda create --name nombre-environment python=3.12
 ~~~
 
-Las dependencias necesarias vienen definidas en el archivo `requirements.txt`
+Las dependencias necesarias para el primer script (export-to-mongo.py) vienen definidas en el `Dockerfile`.
+
+Las dependencias necesarias para ejecutar el segundo script (read-from-mongo.py) vienen definidas en el archivo `requirements.txt`.
 ~~~
 pip install -r requirements.txt
 ~~~
 
 ### :leaves: Crear una base de datos Mongo
 
-Crea un contenedor de Docker con una base de datos Mongo
+Crea un contenedor de Docker con una base de datos Mongo.
 
 ~~~
 docker pull mongo
@@ -50,10 +52,16 @@ docker run -p 27017:27017 --name mongobikes
 
 ## :arrow_forward: Ejecución
 
-Ejecuta primero el script `export-to-mongo.py`, y luego desde otra consola (el primer script se va a estar ejecutando hasta que se cancele la ejecución) ejecuta `read-from-mongo.py`
+Para ejecutar el script `export-to-mongo.py` crea un contenedor usando `Dockerfile`, el script se va a estar ejecutando hasta que se cancele la ejecución.
 
-Comandos para ejecutar desde consola
 ~~~
-python export-to-mongo.py
+docker built -t nombre_imagen .
+docker run nombre_imagen
+~~~
+
+Desde consola ejecuta `read-from-mongo.py`
+
+~~~
+cd code/
 python read-from-mongo.py
 ~~~
