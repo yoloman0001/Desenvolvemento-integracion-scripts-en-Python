@@ -2,10 +2,11 @@
 
 ## :book: Descripción
 
-Este repositorio contiene las herramientas necesarias para acceder a una API periodicamente y guardar sus datos en una base de datos MongoDB.
+Este repositorio contiene las herramientas necesarias para acceder a una API periodicamente, guardar sus datos en una base de datos MongoDB y acceder a esos datos.
 
 ## :open_file_folder: Estructura
-- 
+- `/code` - Carpeta que contiene los scripts para leer la API y para acceder a Mongo.
+- `/data` - Carpeta donde se van a guardar los documentos generados con los datos de la base de datos.
 
 ## :wrench: Requisitos previos
 
@@ -33,7 +34,7 @@ Crea un environment con conda (opcional)
 conda create --name nombre-environment python=3.12
 ~~~
 
-Las dependencias necesarias vienen definidas en un archivo `requirements.txt`
+Las dependencias necesarias vienen definidas en el archivo `requirements.txt`
 ~~~
 pip install -r requirements.txt
 ~~~

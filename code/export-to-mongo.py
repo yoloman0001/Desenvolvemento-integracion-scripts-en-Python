@@ -1,11 +1,16 @@
 import requests
 import time
 from pymongo import MongoClient
+import logging
+
+# Set up logging
+logging.basicConfig(level = logging.INFO)
+logger = logging.getLogger(__name__)
 
 endpoint = 'https://api.citybik.es/v2/networks/bicicorunha'
 
 # Connection to the database
-client = MongoClient('localhost:27017')
+client = MongoClient('mongodb://localhost:27017') # ARREGLAR RUTA CUANDO SE EJECUTA EL CONTENEDOR
 db_name = client['citybik']
 collection_name = db_name['bikestations']
 
@@ -19,11 +24,13 @@ def accessAPI(endpoint):
             # We only want the stations, wich are inside of an object 'network'
             station_list = response.json().get('network',{}).get('stations',[])
             result = collection_name.insert_many(station_list)
-            print(f'Inserted {len(result.inserted_ids)} documents with IDs: {result.inserted_ids}')
+            logger.info(f'Inserted {len(result.inserted_ids)} documents with IDs: {result.inserted_ids}')
         else :
-            print('Error al acceder a la API, compruebe que el endpoint sea correcto.')
+            logger.info('Error when trying to access the  API, check if the endpoint is correct.')
+    except KeyboardInterrupt :
+        logger.info('Interrupted by user')
     except Exception as e:
-        print(f'Error inesperado: {e}')
+        logger.info(f'Unexpected error: {e}')
 
 # Reconnect to the API every 5 minutes
 while True:
