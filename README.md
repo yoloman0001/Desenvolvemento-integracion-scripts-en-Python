@@ -2,7 +2,7 @@
 
 ## :book: Descripción
 
-Este repositorio contiene las herramientas necesarias para acceder a una API periodicamente, guardar sus datos en una base de datos MongoDB y acceder a esos datos.
+Este repositorio contiene dos scripts de `Python` para realizar una tarea de acceso a APIs. El primer script accede a la API periódicamente (5 min.) y lee los datos sobre las estaciones de bicicletas en A Coruña y los guarda en una base de datos MongoDB; el segundo script se conecta a la base de datos, toma los datos, y los convierte en ficheros `.csv` y `.parquet`
 
 ## :open_file_folder: Estructura
 - `/code` - Carpeta que contiene los scripts para leer la API y para acceder a Mongo.
@@ -34,14 +34,12 @@ Crea un environment con conda (opcional).
 conda create --name nombre-environment python=3.12
 ~~~
 
-Las dependencias necesarias para el primer script (export-to-mongo.py) vienen definidas en el `Dockerfile`.
+Las dependencias necesarias para el primer script (export-to-mongo.py) se importarán al ejecutar el `Dockerfile`.
 
 Las dependencias necesarias para ejecutar el segundo script (read-from-mongo.py) vienen definidas en el archivo `requirements.txt`.
 ~~~
 pip install -r requirements.txt
 ~~~
-
-### :leaves: Crear una base de datos Mongo
 
 Crea un contenedor de Docker con una base de datos Mongo.
 
@@ -52,16 +50,20 @@ docker run -p 27017:27017 --name mongobikes
 
 ## :arrow_forward: Ejecución
 
-Para ejecutar el script `export-to-mongo.py` crea un contenedor usando `Dockerfile`, el script se va a estar ejecutando hasta que se cancele la ejecución.
+### 💼 Arrancar los contenedores de Docker
+
+Ejecuta el siguiente comando para arrancar dos contenedores, uno ejecutará el script `export-to-mongo.py` segun lo definido en el `Dockerfile`. El segundo contenedor desplegará la base de datos Mongo.
 
 ~~~
-docker built -t nombre_imagen .
-docker run nombre_imagen
+docker-compose build -t
 ~~~
 
-Desde consola ejecuta `read-from-mongo.py`
+Una vez hayas comprobado que los contenedores están en marcha; desde consola, sitúate dentro de la carpeta `/code` y ejecuta `read-from-mongo.py`
 
 ~~~
 cd code/
 python read-from-mongo.py
 ~~~
+
+Tras ejecutar este script, deberías ver cómo se crean dos archivos en la carpeta `/data`
+
