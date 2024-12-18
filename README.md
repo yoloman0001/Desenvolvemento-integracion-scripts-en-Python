@@ -48,14 +48,26 @@ docker pull mongo
 docker run -p 27017:27017 --name mongobikes
 ~~~
 
+### :whale: Descargar la imagen desde Docker Hub
+
+Para descargar la imagen desde Docker Hub sigue los siguientes pasos:
+
+- Inicia sesión en Docker Hub
+
+- Desde consola, descarga la imagen con este comando
+
+~~~
+docker pull anlaro71204/bike_stations_in_corunha:latest
+~~~
+
 ## :arrow_forward: Ejecución
 
 ### 💼 Arrancar los contenedores de Docker
 
-Ejecuta el siguiente comando para arrancar dos contenedores, uno ejecutará el script `export-to-mongo.py` segun lo definido en el `Dockerfile`. El segundo contenedor desplegará la base de datos Mongo.
+Ejecuta el siguiente comando para arrancar los contenedores, uno ejecutará el script `export-to-mongo.py` segun lo definido en el `Dockerfile`. El segundo contenedor desplegará la base de datos Mongo.
 
 ~~~
-docker-compose build -t
+docker compose docker-compose.yml up -d
 ~~~
 
 Una vez hayas comprobado que los contenedores están en marcha; desde consola, sitúate dentro de la carpeta `/code` y ejecuta `read-from-mongo.py`
